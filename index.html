@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111214">
+  <title>Encontrá tu charla | ML PoloDot</title>
+  <style>
+    :root { color-scheme: dark; --yellow: #ffd600; --ink: #f7f7f5; --muted: #b2b2b4; --border: #414144; --surface: #1c1d1f; --surface-raised: #262729; --background: #111214; --shadow: 0 20px 50px rgb(0 0 0 / 28%); }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--background); color: var(--ink); font: 16px/1.5 Arial, Helvetica, sans-serif; overflow-x: hidden; }
+    .ambient-glow { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 0%, rgb(255 214 0 / 5%), transparent 48%), #111214; }
+    .network-art { position: absolute; z-index: 0; width: min(76vw, 1040px); height: auto; color: var(--yellow); opacity: 0.64; pointer-events: none; filter: drop-shadow(0 0 5px rgb(255 214 0 / 28%)); }
+    .network-art.top { top: 0; right: 0; }
+    .network-art.bottom { bottom: 0; left: 0; width: min(54vw, 700px); transform: rotate(180deg); }
+    .site-shell { position: relative; z-index: 1; min-height: 100vh; overflow: hidden; }
+    header { position: relative; min-height: 27rem; padding: 1.3rem 1rem 2.6rem; overflow: hidden; border-bottom: 1px solid rgb(255 255 255 / 9%); background: linear-gradient(180deg, rgb(10 11 12 / 22%), rgb(10 11 12 / 84%)); }
+    .header-inner, main { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+    .header-inner { position: relative; z-index: 1; }
+    .brand-lockup { display: inline-flex; align-items: center; gap: 0.65rem; color: #fff; }
+    .brand-mark { display: grid; width: 2.65rem; height: 2.65rem; place-items: center; border: 1px solid rgb(255 255 255 / 75%); border-radius: 50%; color: var(--yellow); font-size: 0.8rem; font-weight: 900; letter-spacing: -0.08em; }
+    .brand-name { display: grid; font-size: 0.8rem; font-weight: 800; line-height: 1.05; }
+    .brand-name small { margin-top: 0.24rem; color: #d4d4d4; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; }
+    .event-hero { max-width: 980px; margin: 2.7rem auto 0; text-align: center; }
+    .event-pre { margin: 0 0 -0.18em; color: #fff; font-size: clamp(1.9rem, 4.2vw, 3.25rem); font-weight: 950; letter-spacing: -0.055em; line-height: 1; text-transform: uppercase; }
+    .event-title { margin: 0; color: var(--yellow); font-size: clamp(2.25rem, 8.3vw, 6.9rem); font-weight: 1000; letter-spacing: -0.075em; line-height: 0.98; text-transform: uppercase; text-shadow: 0 0 30px rgb(255 214 0 / 12%); }
+    .event-date { margin: 0.08em 0 0; color: #fff; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 950; letter-spacing: -0.06em; line-height: 1.1; }
+    .event-theme { width: min(100%, 44rem); margin: 1.55rem auto 0; padding: 0.58rem 1.1rem; border: 1px solid rgb(255 255 255 / 7%); border-radius: 0.55rem; background: #343537; color: #fff; font-size: clamp(0.82rem, 2vw, 1.12rem); font-weight: 800; letter-spacing: 0.025em; }
+    main { position: relative; z-index: 1; padding: 2rem 0 2.7rem; }
+    .guide-intro { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: 0 0 1.25rem; }
+    .eyebrow { margin: 0 0 0.35rem; color: var(--yellow); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.045em; line-height: 1.1; }
+    .instruction { max-width: 25rem; margin: 0; color: var(--muted); text-align: right; }
+    .workspace { display: grid; grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.35fr); gap: 1rem; align-items: stretch; }
+    .surface { background: rgb(28 29 31 / 96%); border: 1px solid var(--border); border-radius: 1rem; box-shadow: var(--shadow); }
+    .picker, .guide { padding: 1.35rem; }
+    .card-heading { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 1rem; }
+    .step-number { display: grid; width: 2.35rem; height: 2.35rem; flex: 0 0 auto; place-items: center; border-radius: 0.65rem; background: var(--yellow); color: #111214; font-size: 0.83rem; font-weight: 950; }
+    h2 { margin: 0; color: var(--ink); font-size: 1.15rem; font-weight: 850; letter-spacing: -0.02em; }
+    .category-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.58rem; }
+    .category-button { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; width: 100%; padding: 0.7rem 0.8rem; color: var(--ink); background: var(--surface-raised); border: 1px solid #444548; border-radius: 0.7rem; font: inherit; font-size: 0.92rem; font-weight: 700; text-align: left; cursor: pointer; transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease; }
+    .category-button:hover { transform: translateY(-1px); border-color: var(--yellow); }
+    .category-button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .category-button[aria-pressed="true"] { color: #111214; background: var(--yellow); border-color: var(--yellow); font-weight: 900; }
+    .category-button .chevron { color: var(--yellow); font-size: 1.3rem; line-height: 1; }
+    .category-button[aria-pressed="true"] .chevron { color: #111214; }
+    .empty-state { min-height: 190px; display: grid; align-content: center; justify-items: center; padding: 1.2rem; color: var(--muted); text-align: center; background: #151618; border: 1px dashed #48494b; border-radius: 0.8rem; }
+    .empty-state[hidden] { display: none; }
+    .empty-mark { width: 3.1rem; height: 3.1rem; display: grid; place-items: center; margin-bottom: 0.85rem; color: #111214; background: var(--yellow); border-radius: 50%; font-size: 1.4rem; font-weight: 950; box-shadow: 0 0 24px rgb(255 214 0 / 20%); }
+    .empty-state p { max-width: 20rem; margin: 0; }
+    .floor-alert[hidden] { display: none; }
+    .floor-alert { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.1rem; padding: 0.9rem 1rem; color: #111214; background: var(--yellow); border: 1px solid var(--yellow); border-radius: 0.8rem; box-shadow: 0 0 24px rgb(255 214 0 / 12%); }
+    .floor-alert-icon { display: grid; width: 2.8rem; height: 2.8rem; flex: 0 0 auto; place-items: center; color: var(--yellow); background: #111214; border-radius: 50%; font-size: 1.45rem; font-weight: 950; line-height: 1; }
+    .floor-alert-copy { display: grid; gap: 0.12rem; }
+    .floor-alert-label { margin: 0; font-size: 0.66rem; font-weight: 950; letter-spacing: 0.13em; text-transform: uppercase; }
+    .floor-alert strong { font-size: 1rem; font-weight: 950; line-height: 1.2; }
+    .destination[hidden], .floor-map[hidden], .floor-five[hidden] { display: none; }
+    .destination { margin-bottom: 1rem; padding: 0.15rem 0 0.2rem 1rem; border-left: 4px solid var(--yellow); }
+    .destination-label { margin: 0 0 0.25rem; color: var(--yellow); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.13em; text-transform: uppercase; }
+    .destination h3 { margin: 0; color: var(--ink); font-size: 1.45rem; font-weight: 900; letter-spacing: -0.03em; }
+    .route { margin: 0.38rem 0 0; color: var(--yellow); font-size: 1.03rem; font-weight: 850; }
+    .hint { margin: 0.35rem 0 0; color: var(--muted); }
+    .schedule-block { margin: 0.9rem 0 1.1rem; padding-top: 0.85rem; border-top: 1px solid var(--border); }
+    .schedule-heading { margin: 0 0 0.55rem; }
+    .squad-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; }
+    .squad-card { min-width: 0; min-height: 4.3rem; display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem; padding: 0.7rem 0.75rem; background: #252628; border: 1px solid #454649; border-radius: 0.7rem; }
+    .squad-card span { color: var(--muted); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.03em; }
+    .squad-card strong { color: var(--yellow); font-size: clamp(0.72rem, 1.1vw, 0.9rem); font-weight: 900; white-space: nowrap; }
+    .squad-card.is-unavailable { opacity: 0.58; }
+    .squad-card.is-unavailable strong { color: var(--muted); }
+    .climate-note[hidden] { display: none; }
+    .climate-note { display: flex; align-items: flex-start; gap: 0.7rem; margin-top: 0.65rem; padding: 0.8rem 0.9rem; color: var(--ink); background: #1c1d1f; border: 1px solid #6e5d00; border-left: 4px solid var(--yellow); border-radius: 0.7rem; }
+    .climate-note-icon { display: grid; width: 1.8rem; height: 1.8rem; flex: 0 0 auto; place-items: center; color: #111214; background: var(--yellow); border-radius: 50%; font-weight: 950; }
+    .climate-note-title { margin: 0; color: var(--yellow); font-size: 0.78rem; font-weight: 950; letter-spacing: 0.05em; }
+    .climate-note p:last-child { margin: 0.18rem 0 0; color: var(--muted); font-size: 0.85rem; }
+    .map-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 0.7rem; margin: 1rem 0 0.65rem; }
+    .map-heading h2 { font-size: 1rem; }
+    .map-heading span { color: var(--muted); font-size: 0.8rem; }
+    .sector-map { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "c d a" ". b ."; gap: 0.6rem; }
+    .sector { min-width: 0; min-height: 5.6rem; display: flex; flex-direction: column; justify-content: space-between; padding: 0.75rem; background: #252628; border: 1px solid #454649; border-radius: 0.75rem; transition: background 140ms ease, color 140ms ease, border-color 140ms ease; }
+    .sector[data-sector="C"] { grid-area: c; }
+    .sector[data-sector="D"] { grid-area: d; }
+    .sector[data-sector="A"] { grid-area: a; }
+    .sector[data-sector="B"] { grid-area: b; }
+    .sector-label { color: var(--muted); font-size: 0.62rem; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
+    .sector strong { color: var(--ink); font-size: 1.55rem; font-weight: 950; line-height: 1; }
+    .sector small { color: var(--muted); font-size: 0.72rem; }
+    .sector.is-active { background: var(--yellow); border: 2px solid var(--yellow); box-shadow: 0 0 24px rgb(255 214 0 / 14%); }
+    .sector.is-active .sector-label, .sector.is-active strong, .sector.is-active small { color: #111214; }
+    .sum-target { margin-top: 0.65rem; padding: 0.8rem 0.9rem; color: #111214; background: var(--yellow); border-radius: 0.75rem; font-weight: 900; }
+    .floor-five { padding: 1rem; background: #252628; border: 1px solid #454649; border-radius: 0.8rem; }
+    .floor-five .map-heading { margin-top: 0; }
+    .floor-five .sector-map { margin-top: 0.7rem; }
+    .map-caption { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.8rem; }
+    footer { position: relative; z-index: 1; width: min(1120px, calc(100% - 2rem)); margin: 0 auto; padding: 0 0 2rem; color: var(--muted); font-size: 0.88rem; }
+    footer::before { content: ""; display: inline-block; width: 0.48rem; height: 0.48rem; margin: 0 0.5rem 0.08rem 0; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 10px rgb(255 214 0 / 55%); }
+    @media (max-width: 760px) { header { min-height: 24rem; padding-top: 1rem; } .event-hero { margin-top: 3rem; } .network-art { width: 110vw; opacity: 0.4; } .network-art.bottom { width: 75vw; } .guide-intro { align-items: flex-start; flex-direction: column; gap: 0.4rem; } .instruction { max-width: none; text-align: left; } .workspace { grid-template-columns: 1fr; } .category-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .picker, .guide { padding: 1rem; } }
+    @media (max-width: 420px) { .header-inner, main, footer { width: min(100% - 1.25rem, 1120px); } header { min-height: 21rem; } .event-hero { margin-top: 2.7rem; } .event-title { font-size: clamp(2rem, 10vw, 2.6rem); letter-spacing: -0.07em; } .event-theme { margin-top: 1.2rem; } .category-list { grid-template-columns: 1fr; } .map-heading { align-items: flex-start; flex-direction: column; gap: 0.15rem; } .sector-map { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "c d" "a b"; } .squad-grid { grid-template-columns: 1fr; } .squad-card { min-height: 0; flex-direction: row; align-items: center; padding: 0.65rem 0.8rem; } .squad-card strong { font-size: 0.9rem; } .sector { min-height: 4.7rem; padding: 0.6rem; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+    @media print { :root { color-scheme: light; --ink: #111; --muted: #444; --surface: #fff; --surface-raised: #f2f2f2; --background: #fff; --border: #999; } body, .ambient-glow { background: #fff; color: #111; } .network-art { opacity: 0.2; } header { min-height: auto; print-color-adjust: exact; -webkit-print-color-adjust: exact; } .workspace { grid-template-columns: 1fr 1.4fr; } .surface { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; } }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+  <div class="site-shell">
+    <header>
+      <svg class="network-art top" viewBox="0 0 1000 380" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M250 0 375 86 510 6 610 98 748 44 858 122 976 20M375 86 474 137 610 98 690 190 858 122 900 252 1000 184M510 6 474 137 610 98 690 190 748 44 858 122M690 190 770 246 900 252 1000 310M770 246 820 340 900 252 970 360M858 122 900 252 1000 184" /></g><g fill="currentColor"><circle cx="375" cy="86" r="4"/><circle cx="510" cy="6" r="3"/><circle cx="610" cy="98" r="5"/><circle cx="748" cy="44" r="4"/><circle cx="858" cy="122" r="5"/><circle cx="474" cy="137" r="4"/><circle cx="690" cy="190" r="3"/><circle cx="770" cy="246" r="5"/><circle cx="900" cy="252" r="4"/><circle cx="820" cy="340" r="3"/></g></svg>
+      <svg class="network-art bottom" viewBox="0 0 700 250" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 204 90 130 190 194 280 82 370 145 470 48 565 120 700 26M90 130 165 54 280 82 310 0M190 194 270 240 370 145 438 218 565 120 620 215M280 82 370 145 470 48 520 0 565 120 700 146"/></g><g fill="currentColor"><circle cx="90" cy="130" r="4"/><circle cx="165" cy="54" r="3"/><circle cx="190" cy="194" r="5"/><circle cx="280" cy="82" r="4"/><circle cx="370" cy="145" r="3"/><circle cx="470" cy="48" r="5"/><circle cx="565" cy="120" r="4"/><circle cx="620" cy="215" r="3"/></g></svg>
+      <div class="header-inner"><div class="brand-lockup" aria-label="Mercado Libre, MELIPRO"><span class="brand-mark" aria-hidden="true">ML</span><span class="brand-name">mercado libre<small>MELIPRO</small></span></div><div class="event-hero"><p class="event-pre">PRE</p><p class="event-title">CYBER MONDAY</p><p class="event-date">02/10</p><p class="event-theme">HOME ELECTRONICS &amp; TECHNOLOGY</p></div></div>
+    </header>
+  <main>
+    <div class="guide-intro"><div><p class="eyebrow">GUÍA DE ORIENTACIÓN</p><h1>Encontrá tu charla</h1></div><p class="instruction">Elegí una categoría y te mostramos el piso y el sector. Al llegar, buscá el número de sala.</p></div>
+    <div class="workspace">
+      <section class="surface picker" aria-labelledby="category-heading"><div class="card-heading"><span class="step-number" aria-hidden="true">01</span><h2 id="category-heading">¿Qué charla buscás?</h2></div><div class="category-list" role="group" aria-label="Categorías de charlas">
+        <button class="category-button" type="button" data-id="linea-blanca" aria-pressed="false">Línea blanca <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="tv-audio" aria-pressed="false">TV &amp; Audio <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="gaming" aria-pressed="false">Gaming <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="notebooks" aria-pressed="false">Notebooks <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="mobile" aria-pressed="false">Mobile (Smartphones, Tablets y Wearables) <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="pequenos" aria-pressed="false">Pequeños Electrodomésticos <span class="chevron" aria-hidden="true">›</span></button>
+        <button class="category-button" type="button" data-id="clima" aria-pressed="false">Climatización <span class="chevron" aria-hidden="true">›</span></button>
+      </div></section>
+      <section class="surface guide" aria-label="Destino seleccionado">
+        <div id="empty-state" class="empty-state"><div class="empty-mark" aria-hidden="true">?</div><p>Elegí una charla para ver a qué piso y sector ir.</p></div>
+        <div id="selection" hidden>
+          <div id="floor-alert" class="floor-alert" hidden role="status" aria-live="polite"><span class="floor-alert-icon" aria-hidden="true">↕</span><div class="floor-alert-copy"><p class="floor-alert-label">Cambio de piso</p><strong>¡Ojo! Esta charla es en el piso 5</strong></div></div>
+          <div class="destination" aria-live="polite"><p class="destination-label">Tu destino</p><h3 id="selected-category"></h3><p class="route" id="route"></p><p class="hint" id="hint"></p></div>
+          <section class="schedule-block" aria-labelledby="schedule-heading"><div class="map-heading schedule-heading"><h2 id="schedule-heading">Horarios por squad</h2></div><div class="squad-grid" role="list" aria-label="Horarios disponibles"><div class="squad-card" role="listitem"><span>Squad 1</span><strong class="squad-time">11:00 a 11:20</strong></div><div class="squad-card" role="listitem"><span>Squad 2</span><strong class="squad-time">11:25 a 11:45</strong></div><div class="squad-card" role="listitem"><span>Squad 3</span><strong class="squad-time">11:50 a 12:10</strong></div></div><div id="climate-note" class="climate-note" hidden role="note"><span class="climate-note-icon" aria-hidden="true">!</span><div><p class="climate-note-title">Climatización tiene un único horario</p><p>Está disponible solo en Squad 3, de 11:50 a 12:10. Te sugerimos aprovechar Squad 1 y 2 para asistir a otras charlas disponibles.</p></div></div></section>
+          <div id="floor-six" class="floor-map" hidden><div class="map-heading"><h2>Piso 6</h2><span>Esquema de sectores</span></div><div class="sector-map" role="group" aria-label="Sectores del piso 6"><div class="sector" data-sector="C"><span class="sector-label">Sector</span><strong>C</strong><small>6C12</small></div><div class="sector" data-sector="D"><span class="sector-label">Sector</span><strong>D</strong><small>6D16 · 6D20</small></div><div class="sector" data-sector="A"><span class="sector-label">Sector</span><strong>A</strong><small>Referencia</small></div><div class="sector" data-sector="B"><span class="sector-label">Sector</span><strong>B</strong><small>Referencia</small></div></div><div id="sum-target" class="sum-target" hidden>SUM · Piso 6</div><p id="map-caption" class="map-caption">El esquema no está a escala.</p></div>
+          <div id="floor-five" class="floor-five" hidden><div class="map-heading"><h2>Sectorización · Piso 5</h2><span>Esquema orientativo</span></div><div class="sector-map" role="group" aria-label="Sectores orientativos del piso 5"><div class="sector" data-sector="C"><span class="sector-label">Sector</span><strong>C</strong></div><div class="sector" data-sector="D"><span class="sector-label">Sector</span><strong>D</strong></div><div class="sector" data-sector="A"><span class="sector-label">Sector</span><strong>A</strong></div><div class="sector" data-sector="B"><span class="sector-label">Sector</span><strong>B</strong><small>Sala 5B11</small></div></div><p class="map-caption">Ubicá la letra B y después buscá la sala 5B11. El esquema no está a escala.</p></div>
+        </div>
+      </section>
+    </div>
+    <footer>Si necesitás ayuda para encontrar el sector, consultá al equipo del evento.</footer>
+  </main>
+  </div>
+  <script>
+    const destinations = {
+      "linea-blanca": { category: "Línea blanca", floor: 6, sector: "D", room: "6D20", route: "Piso 6 · Sector D · Sala 6D20", hint: "Al llegar al sector D, buscá la sala 6D20." },
+      "tv-audio": { category: "TV & Audio", floor: 5, sector: "B", room: "5B11", route: "Piso 5 · Sector B · Sala 5B11", hint: "Al llegar al sector B, buscá la sala 5B11." },
+      "gaming": { category: "Gaming", floor: 6, sector: "D", room: "6D16", route: "Piso 6 · Sector D · Sala 6D16", hint: "Al llegar al sector D, buscá la sala 6D16." },
+      "notebooks": { category: "Notebooks", floor: 6, sector: "D", room: null, route: "Piso 6 · Lado D", hint: "No hay número de sala indicado para esta categoría." },
+      "mobile": { category: "Mobile (Smartphones, Tablets y Wearables)", floor: 6, sector: "C", room: "6C12", route: "Piso 6 · Sector C · Sala 6C12", hint: "Al llegar al sector C, buscá la sala 6C12." },
+      "pequenos": { category: "Pequeños Electrodomésticos", floor: 6, sector: null, room: "SUM", route: "Piso 6 · SUM", hint: "El destino figura como SUM en el cronograma." },
+      "clima": { category: "Climatización", floor: 6, sector: null, room: "SUM", squadTimes: ["—", "—", "11:50 a 12:10"], route: "Piso 6 · SUM", hint: "El destino figura como SUM en el cronograma." }
+    };
+    const buttons = Array.from(document.querySelectorAll(".category-button"));
+    const emptyState = document.getElementById("empty-state");
+    const selection = document.getElementById("selection");
+    const floorAlert = document.getElementById("floor-alert");
+    const floorSix = document.getElementById("floor-six");
+    const floorFive = document.getElementById("floor-five");
+    const sumTarget = document.getElementById("sum-target");
+    const mapCaption = document.getElementById("map-caption");
+    const climateNote = document.getElementById("climate-note");
+    const squadTimeNodes = Array.from(document.querySelectorAll(".squad-time"));
+    const defaultSquadTimes = ["11:00 a 11:20", "11:25 a 11:45", "11:50 a 12:10"];
+    const sectorNodes = Array.from(document.querySelectorAll(".sector[data-sector]"));
+    function chooseDestination(id) {
+      const destination = destinations[id];
+      if (!destination) return;
+      buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.id === id)));
+      document.getElementById("selected-category").textContent = destination.category;
+      document.getElementById("route").textContent = destination.route;
+      document.getElementById("hint").textContent = destination.hint;
+      emptyState.hidden = true;
+      selection.hidden = false;
+      floorAlert.hidden = destination.floor !== 5;
+      floorSix.hidden = destination.floor !== 6;
+      floorFive.hidden = destination.floor !== 5;
+      sumTarget.hidden = !(destination.floor === 6 && destination.room === "SUM");
+      climateNote.hidden = id !== "clima";
+      const schedule = destination.squadTimes || defaultSquadTimes;
+      squadTimeNodes.forEach((node, index) => {
+        node.textContent = schedule[index];
+        node.closest(".squad-card").classList.toggle("is-unavailable", schedule[index] === "—");
+      });
+      mapCaption.textContent = destination.sector
+        ? "El sector " + destination.sector + " está resaltado. El esquema no está a escala."
+        : "El SUM no está asociado a una letra en los datos recibidos.";
+      sectorNodes.forEach((node) => node.classList.toggle("is-active", node.dataset.sector === destination.sector));
+    }
+    buttons.forEach((button) => button.addEventListener("click", () => chooseDestination(button.dataset.id)));
+  </script>
+</body>
+</html>
